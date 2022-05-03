@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.api.testeedson.services.RoomService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import br.com.api.testeedson.dtos.RoomDto;
 import br.com.api.testeedson.model.RoomModel;
 
@@ -23,6 +25,7 @@ import javax.validation.Valid;
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/room")
+@Api(value="Salas")
 public class RoomController {
 	
 	final RoomService roomService;
@@ -32,6 +35,7 @@ public class RoomController {
 	}
 	
     @PostMapping
+    @ApiOperation(value = "Cadastrar uma sala")
     public ResponseEntity<Object> saveRoom(@RequestBody @Valid RoomDto roomDto){
 
         var roomModel = new RoomModel();        
@@ -40,11 +44,13 @@ public class RoomController {
     }
     
     @GetMapping
+    @ApiOperation(value = "Retornar todas salas")
     public ResponseEntity<List<RoomModel>> getAllRooms(){
     	return ResponseEntity.status(HttpStatus.OK).body(roomService.findAll()); 
     }
 
     @GetMapping("/{id}")
+    @ApiOperation(value = "Retornar uma sala")
     public ResponseEntity<Object> getOneRoom(@PathVariable(value = "id") UUID id){
         Optional<RoomModel> roomModelOptional = roomService.findById(id);
         if (!roomModelOptional.isPresent()) {
@@ -54,6 +60,7 @@ public class RoomController {
     }   
     
     @DeleteMapping("/{id}")
+    @ApiOperation(value = "Deletar uma sala")
     public ResponseEntity<Object> deleteRoom(@PathVariable(value = "id") UUID id){
         Optional<RoomModel> roomModelOptional = roomService.findById(id);
         if (!roomModelOptional.isPresent()) {
@@ -64,6 +71,7 @@ public class RoomController {
     }
     
     @PutMapping("/{id}")
+    @ApiOperation(value = "Editar uma sala")
     public ResponseEntity<Object> updateRoom(@PathVariable(value = "id") UUID id,
                                                     @RequestBody @Valid RoomDto roomDto){
         Optional<RoomModel> roomModelOptional = roomService.findById(id);

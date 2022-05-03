@@ -54,5 +54,5 @@ public class CandidateModel implements Serializable {
 
 	public void setBirthDate(Date birthDate) {
 		this.birthDate = birthDate;
-	}
+	}	
 }

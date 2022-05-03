@@ -27,12 +27,15 @@ import br.com.api.testeedson.model.AvailabilityModel;
 import br.com.api.testeedson.model.CandidateModel;
 import br.com.api.testeedson.services.ExamService;
 import br.com.api.testeedson.services.RoomService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import br.com.api.testeedson.services.AvailabilityService;
 import br.com.api.testeedson.services.CandidateService;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/availability")
+@Api(value="Agendamentos")
 public class AvailabilityController {	
 	
 	final AvailabilityService availabilityService;	
@@ -52,6 +55,7 @@ public class AvailabilityController {
 		
 		
     @PostMapping
+    @ApiOperation(value = "Cadastrar um agendamento")
     public ResponseEntity<Object> saveAvailability(@RequestBody @Valid AvailabilityDto availabilityDto){
         Optional<ExamModel> examModelOptional = examService.findById(availabilityDto.getExamId());
         if (!examModelOptional.isPresent()) {
@@ -81,11 +85,13 @@ public class AvailabilityController {
     }
     
     @GetMapping
+    @ApiOperation(value = "Retornar todos os agendamentos")
     public ResponseEntity<List<AvailabilityModel>> getAllAvailabilitys(){
     	return ResponseEntity.status(HttpStatus.OK).body(availabilityService.findAll()); 
     }
 
     @GetMapping("/{id}")
+    @ApiOperation(value = "Retornar um agendamento")
     public ResponseEntity<Object> getOneAvailability(@PathVariable(value = "id") UUID id){
         Optional<AvailabilityModel> availabilityModelOptional = availabilityService.findById(id);
         if (!availabilityModelOptional.isPresent()) {
@@ -95,6 +101,7 @@ public class AvailabilityController {
     }   
     
     @DeleteMapping("/{id}")
+    @ApiOperation(value = "Deletar um agendamento")
     public ResponseEntity<Object> deleteAvailability(@PathVariable(value = "id") UUID id){
         Optional<AvailabilityModel> availabilityModelOptional = availabilityService.findById(id);
         if (!availabilityModelOptional.isPresent()) {
@@ -105,6 +112,7 @@ public class AvailabilityController {
     }
     
     @PutMapping("/{id}")
+    @ApiOperation(value = "Editar um agendamento")
     public ResponseEntity<Object> updateAvailability(@PathVariable(value = "id") UUID id,
                                                     @RequestBody @Valid AvailabilityDto availabilityDto){
         Optional<AvailabilityModel> availabilityModelOptional = availabilityService.findById(id);

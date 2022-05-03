@@ -25,10 +25,13 @@ import br.com.api.testeedson.model.CandidateModel;
 import br.com.api.testeedson.model.ExamModel;
 import br.com.api.testeedson.services.CandidateService;
 import br.com.api.testeedson.services.ExamService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/exam")
+@Api(value="Provas")
 public class ExamController {	
 	
 	final ExamService examService;	
@@ -38,6 +41,7 @@ public class ExamController {
 	}		
 		
     @PostMapping
+    @ApiOperation(value = "Cadastrar uma prova")
     public ResponseEntity<Object> saveExam(@RequestBody @Valid ExamDto examDto){
             	
         var examModel = new ExamModel();                
@@ -46,11 +50,13 @@ public class ExamController {
     }
     
     @GetMapping
+    @ApiOperation(value = "Retornar todas provas")
     public ResponseEntity<List<ExamModel>> getAllExams(){
     	return ResponseEntity.status(HttpStatus.OK).body(examService.findAll()); 
     }
 
     @GetMapping("/{id}")
+    @ApiOperation(value = "Retornar uma prova")
     public ResponseEntity<Object> getOneExam(@PathVariable(value = "id") UUID id){
         Optional<ExamModel> examModelOptional = examService.findById(id);
         if (!examModelOptional.isPresent()) {
@@ -60,6 +66,7 @@ public class ExamController {
     }   
     
     @DeleteMapping("/{id}")
+    @ApiOperation(value = "Deletar uma prova")
     public ResponseEntity<Object> deleteExam(@PathVariable(value = "id") UUID id){
         Optional<ExamModel> examModelOptional = examService.findById(id);
         if (!examModelOptional.isPresent()) {
@@ -70,6 +77,7 @@ public class ExamController {
     }
     
     @PutMapping("/{id}")
+    @ApiOperation(value = "Editar uma prova")
     public ResponseEntity<Object> updateExam(@PathVariable(value = "id") UUID id,
                                                     @RequestBody @Valid ExamDto examDto){
         Optional<ExamModel> examModelOptional = examService.findById(id);

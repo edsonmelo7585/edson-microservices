@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.api.testeedson.services.CandidateService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import br.com.api.testeedson.dtos.CandidateDto;
 import br.com.api.testeedson.model.CandidateModel;
 
@@ -23,6 +25,7 @@ import javax.validation.Valid;
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/candidate")
+@Api(value="Candidatos")
 public class CandidateController {
 	
 	final CandidateService candidateService;
@@ -32,6 +35,7 @@ public class CandidateController {
 	}
 	
     @PostMapping
+    @ApiOperation(value = "Cadastrar um candidato")
     public ResponseEntity<Object> saveCandidate(@RequestBody @Valid CandidateDto candidateDto){
 //        if(candidateService.findByCpf(candidateDto.getCpf())){
 //            return ResponseEntity.status(HttpStatus.CONFLICT).body("Conflict: CPF is already in use!");
@@ -43,11 +47,13 @@ public class CandidateController {
     }
     
     @GetMapping
+    @ApiOperation(value = "Retornar todos candidatos")
     public ResponseEntity<List<CandidateModel>> getAllCandidates(){
     	return ResponseEntity.status(HttpStatus.OK).body(candidateService.findAll()); 
     }
 
     @GetMapping("/{id}")
+    @ApiOperation(value = "Retornar um candidato")
     public ResponseEntity<Object> getOneCandidate(@PathVariable(value = "id") UUID id){
         Optional<CandidateModel> candidateModelOptional = candidateService.findById(id);
         if (!candidateModelOptional.isPresent()) {
@@ -57,6 +63,7 @@ public class CandidateController {
     }   
     
     @DeleteMapping("/{id}")
+    @ApiOperation(value = "Deletar um candidato")
     public ResponseEntity<Object> deleteCandidate(@PathVariable(value = "id") UUID id){
         Optional<CandidateModel> candidateModelOptional = candidateService.findById(id);
         if (!candidateModelOptional.isPresent()) {
@@ -67,6 +74,7 @@ public class CandidateController {
     }
     
     @PutMapping("/{id}")
+    @ApiOperation(value = "Editar um candidato")
     public ResponseEntity<Object> updateCandidate(@PathVariable(value = "id") UUID id,
                                                     @RequestBody @Valid CandidateDto candidateDto){
         Optional<CandidateModel> candidateModelOptional = candidateService.findById(id);

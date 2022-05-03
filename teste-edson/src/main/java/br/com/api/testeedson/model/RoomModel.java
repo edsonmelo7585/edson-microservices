@@ -30,5 +30,5 @@ public class RoomModel implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }    
+    }
 }
