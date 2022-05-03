@@ -32,8 +32,8 @@ public class ExamService {
 
 	public Optional<ExamModel> findById(UUID id) {		
 		return examRepository.findById(id);
-	}
-
+	}	
+	
 	@Transactional
 	public void delete(ExamModel ExamModel) {
 		examRepository.delete(ExamModel);		

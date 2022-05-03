@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.UUID;
 
 @Entity
-@Table(name="candidate")
+@Table(name="CANDIDATE")
 public class CandidateModel implements Serializable {
 	private static final long serialVersionUID = 1L;
     
@@ -14,10 +14,10 @@ public class CandidateModel implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 	
-    @Column(name="name", nullable = false, unique = true, length = 50)
+    @Column(name="NAME", nullable = false, unique = true, length = 50)
     private String name;
     
-    @Column(name="cpf", nullable = false, unique = true, length = 11)
+    @Column(name="CPF", nullable = false, unique = true, length = 11)
     private String cpf;
     
     @Temporal(TemporalType.DATE)

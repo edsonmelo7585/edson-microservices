@@ -10,4 +10,6 @@ import br.com.api.testeedson.model.AvailabilityModel;
 @Repository
 public interface AvailabilityRepository extends JpaRepository<AvailabilityModel, UUID>{
 
+	boolean existsByExamId(UUID examId);	
+	boolean existsByCandidateId(UUID candidateId);
 }

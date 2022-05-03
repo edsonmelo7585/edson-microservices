@@ -69,13 +69,13 @@ public class CandidateController {
     @PutMapping("/{id}")
     public ResponseEntity<Object> updateCandidate(@PathVariable(value = "id") UUID id,
                                                     @RequestBody @Valid CandidateDto candidateDto){
-        Optional<CandidateModel> parkingSpotModelOptional = candidateService.findById(id);
-        if (!parkingSpotModelOptional.isPresent()) {
+        Optional<CandidateModel> candidateModelOptional = candidateService.findById(id);
+        if (!candidateModelOptional.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Candidate not found.");
         }
         var candidateModel = new CandidateModel();
         BeanUtils.copyProperties(candidateDto, candidateModel);
-        candidateModel.setId(parkingSpotModelOptional.get().getId());
+        candidateModel.setId(candidateModelOptional.get().getId());
         return ResponseEntity.status(HttpStatus.OK).body(candidateService.save(candidateModel));
     }    
 }

@@ -7,27 +7,26 @@ import java.util.UUID;
 import javax.persistence.*;
 
 @Entity
-@Table(name="availability")
-//@SequenceGenerator(name="availability_seq", sequenceName = "availability_seq", initialValue = 1, allocationSize = 1)
+@Table(name="AVAILABILITY", uniqueConstraints={
+	       @UniqueConstraint(name="UN_AVAILABILITY_EXAM_ID", columnNames={"EXAM_ID"}),
+	       @UniqueConstraint(name="UN_AVAILABILITY_CANDIDATE_ID", columnNames={"CANDIDATE_ID"})
+	   })
 public class AvailabilityModel implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "availability_seq")
-//    private Long id;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;	
-        
-//    @Column(name = "room_id")
-//    private UUID roomId; 
-    
+            
     @ManyToOne
     private RoomModel room;        
     
     @OneToOne
-    private ExamModel exam;   
+    private ExamModel exam;
+    
+    @OneToOne()
+    private CandidateModel candidate;    
 
 	@Column(nullable = false)
     private Date availabilityDate;	
@@ -56,6 +55,14 @@ public class AvailabilityModel implements Serializable {
 		this.exam = exam;
 	}
 
+	public CandidateModel getCandidate() {
+		return candidate;
+	}
+
+	public void setCandidate(CandidateModel candidate) {
+		this.candidate = candidate;
+	}	
+	
 	public Date getAvailabilityDate() {
 		return availabilityDate;
 	}

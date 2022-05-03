@@ -35,21 +35,12 @@ public class ExamController {
 
 	public ExamController(ExamService examService) {		
 		this.examService = examService;
-	}
-	
-	@Autowired
-	private CandidateService candidateService;
-		
+	}		
 		
     @PostMapping
     public ResponseEntity<Object> saveExam(@RequestBody @Valid ExamDto examDto){
-        Optional<CandidateModel> candidateModelOptional = candidateService.findById(examDto.getCandidateId());
-        if (!candidateModelOptional.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Candidate not found.");
-        }    	
-    	
-        var examModel = new ExamModel();        
-        examModel.setCandidate(candidateModelOptional.get());
+            	
+        var examModel = new ExamModel();                
         BeanUtils.copyProperties(examDto, examModel);
         return ResponseEntity.status(HttpStatus.CREATED).body(examService.save(examModel));
     }
@@ -81,20 +72,15 @@ public class ExamController {
     @PutMapping("/{id}")
     public ResponseEntity<Object> updateExam(@PathVariable(value = "id") UUID id,
                                                     @RequestBody @Valid ExamDto examDto){
-        Optional<ExamModel> parkingSpotModelOptional = examService.findById(id);
-        if (!parkingSpotModelOptional.isPresent()) {
+        Optional<ExamModel> examModelOptional = examService.findById(id);
+        if (!examModelOptional.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Exam not found.");
         }
-        Optional<CandidateModel> candidateModelOptional = candidateService.findById(examDto.getCandidateId());
-        if (!candidateModelOptional.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Candidate not found.");
-        }        
         
         var examModel = new ExamModel();
-        examModel.setCandidate(candidateModelOptional.get());
         BeanUtils.copyProperties(examDto, examModel);
-        examModel.setId(parkingSpotModelOptional.get().getId());
+        examModel.setId(examModelOptional.get().getId());
         return ResponseEntity.status(HttpStatus.OK).body(examService.save(examModel));
-    } 	
+    }	
 
 }

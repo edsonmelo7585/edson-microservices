@@ -22,7 +22,6 @@ public class CandidateService {
 
 	@Transactional
 	public CandidateModel save(CandidateModel candidateModel) {
-		// TODO Auto-generated method stub
 		return candidateRepository.save(candidateModel);
 	}		
 	
@@ -36,7 +35,7 @@ public class CandidateService {
 
 	public Optional<CandidateModel> findById(UUID id) {		
 		return candidateRepository.findById(id);
-	}
+	}	
 
 	@Transactional
 	public void delete(CandidateModel candidateModel) {

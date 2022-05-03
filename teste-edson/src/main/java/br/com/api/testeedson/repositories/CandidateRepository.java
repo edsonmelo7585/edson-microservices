@@ -12,4 +12,5 @@ import br.com.api.testeedson.model.CandidateModel;
 public interface CandidateRepository extends JpaRepository<CandidateModel, UUID>{
 	
 	List<CandidateModel> findByCpf(String cpf);
+
 }
