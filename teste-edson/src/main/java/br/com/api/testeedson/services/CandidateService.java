@@ -25,8 +25,8 @@ public class CandidateService {
 		return candidateRepository.save(candidateModel);
 	}		
 	
-	public boolean findByCpf(String cpf) {
-		return true;
+	public UUID findByCpf(String cpf) {
+		return candidateRepository.findByCpf(cpf).get(0).getId();		
 	}
 
 	public List<CandidateModel> findAll() {
