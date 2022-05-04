@@ -28,7 +28,8 @@ public class AvailabilityModel implements Serializable {
     @OneToOne()
     private CandidateModel candidate;    
 
-	@Column(nullable = false)
+    @Temporal(TemporalType.DATE)
+    @Column(nullable = false)
     private Date availabilityDate;	
 	
     public UUID getId() {
